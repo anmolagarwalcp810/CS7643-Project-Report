@@ -1,0 +1,12 @@
+{
+    "name": "latex-space",
+    "build": { "dockerfile": "Dockerfile" },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop",
+                "github.copilot"
+            ]
+        }
+    }
+}
