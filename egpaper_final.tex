@@ -136,6 +136,12 @@ In this approach, we wanted to see if context distillation can be used in conjun
 in the previous approach. Here, unlike vanilla context distillation, first model used is a fine-tuned one instead of being pretrained. The second model is still pretrained.
 
 \section{Experimental Setup}
+We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\\\
+\textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\\\
+\textbf{Datasets} We use the MNLI dataset for generating the context data. For In-domain generalization, we mesaure the accuracy on the validation set of MNLI dataset. For out-of domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\\\
+\textbf{Context Size} We evaluate the training strategies on a context size of 32. For in-context leanrning based strategies, this means providing a context of 32 examples during evaluation. For few-shot fine tuning based strategies, this means providing 32 examples for fine-tuning the model. For context distillation, we randomly sample a subset of 100 examples from the binarized MNLI training dataset and remove their ground-truth labels. The models are then fine tuned using a distillation loss against a reference moodel.\\\\
+For the fine tuning based strategies, we fine tune the model for 40 epochs with a batch size of 4.\\\\
+Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 AMD EPYC 7282 vCPUs and 48 GB RAM.
 
 
 \section{Results}
