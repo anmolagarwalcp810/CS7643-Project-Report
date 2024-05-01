@@ -28,17 +28,17 @@
 \title{Task Adaptation Strategies for Language Models}
 
 \author{Anmol Agarwal\\
-Georgia Institute of Technology\\
-{\tt\small aagarwal622@gatech.edu}
-% For a paper whose authors are all at the same institution,
-% omit the following lines up until the closing ``}''.
-% Additional authors and addresses can be added with ``\and'',
-% just like the second author.
-% To save space, use either the email address or home page, not both
-\and
-Rayyan Shahid\\
-Georgia Institute of Technology\\
-{\tt\small rshahid9@gatech.edu}
+	Georgia Institute of Technology\\
+	{\tt\small aagarwal622@gatech.edu}
+	% For a paper whose authors are all at the same institution,
+	% omit the following lines up until the closing ``}''.
+	% Additional authors and addresses can be added with ``\and'',
+	% just like the second author.
+	% To save space, use either the email address or home page, not both
+	\and
+	Rayyan Shahid\\
+	Georgia Institute of Technology\\
+	{\tt\small rshahid9@gatech.edu}
 }
 
 \maketitle
@@ -51,34 +51,40 @@ Georgia Institute of Technology\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Look at previous ICCV abstracts to get a feel for style and length.
-	 Please note that the title can be up to 512 characters in length.
-	 The maximum size of the abstract is 4000 characters.
+	The ABSTRACT is to be in fully-justified italicized text, at the top
+	of the left-hand column, below the author and affiliation
+	information. Use the word ``Abstract'' as the title, in 12-point
+	Times, boldface type, centered relative to the column, initially
+	capitalized. The abstract is to be in 10-point, single-spaced type.
+	Leave two blank lines after the Abstract, then begin the main text.
+	Look at previous ICCV abstracts to get a feel for style and length.
+	Please note that the title can be up to 512 characters in length.
+	The maximum size of the abstract is 4000 characters.
 \end{abstract}
 
 \footnote{Project \href{https://github.com/sicario001/llmft}{GitHub repo}}
 %%%%%%%%% BODY TEXT
-\section{Introduction}
-In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: \textit{few-shot fine tuning} and \textit{in-context learning (ICL)}. \cite {mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. \cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot finetuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. In this work, we compare the above task adaptation strategies i.e few-shot fine tuning, in-context learning and context distillation, and also propose two new task adaptation strategies - namely few-shot fine tuning with in-context learning and context distillation with few-shot fine tuning. We will describe each of the above strategies in detail in the following section. We will also provide evaluation results for the above strategies for the OPT family on the MNLI dataset for different context lengths.
+\section{Introduction/Background/Motivation}
+In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: \textit{few-shot fine tuning} and \textit{in-context learning (ICL)}. \cite {mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. Moreover, few-shot fine tuning has an added benefit of reduced runtime latency and correspondingly higher sample processing rate as compared in-context learning because of smaller context sizes at the time of inference. \cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot finetuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. It has the same benefits in terms of runtime latency as few-shot fine tuning because it doesn't require contexts to be provided at inference time.
 
-\section{Background}
+In this work, we compare the above task adaptation strategies i.e few-shot fine tuning, in-context learning and context distillation, and also propose two new task adaptation strategies - namely in-context learning with few-shot fine tuning and context distillation with few-shot fine tuning. The motivation behind using in-context learning with few-shot fine tuning is that it allows the model to leverage the context data through both the strategies. The motivation behind using context distillation with few-shot fine tuning is that it should in theory provide the performance of in-context learning with few-shot fine tuning while also providing the runtime latency benefits of context distillation because of the absence of context at inference time. 
+
+If this project proves successful, it could significantly enhance the capabilities of existing Large Language Models (LLMs). This would enable them to handle extended dialogue conversations more effectively, answer queries about extensive PDF files, or even auto-complete code while being aware of a large repository. All these improvements could be achieved without the necessity for costly re-training from the ground up or fine-tuning on extensive datasets.
+
+
+We will describe each of the above strategies in detail in the following section. We will also provide evaluation results for the above strategies for the OPT family on the MNLI dataset for different context lengths. We also report out-of-domain generalization results on the lexical overlap subset of HANS dataset. Please refer to the experimental setup section for more details on the datasets and evaluation metrics used.
+
 \section{Approach}
 In this section, we will describe the approach for the different task adaptation strategies explored as part of this work. This includes three existing task adaptation strategies:
 \begin{enumerate}
-    \item Few-Shot Fine Tuning
-    \item In-Context Learning
-    \item Context Distillation
+	\item Few-Shot Fine Tuning
+	\item In-Context Learning
+	\item Context Distillation
 \end{enumerate}
 We also propose two new task adaptation strategies:
 \begin{enumerate}
-    \item Few-Shot Fine Tuning with In-Context Learning
-    \item Context Distillation with Few-Shot Fine Tuning
+	\item In-Context Learning with Few-Shot Fine Tuning 
+	\item Context Distillation with Few-Shot Fine Tuning
 \end{enumerate}
 Apart from the labelled context data, the context distillation based approaches also rely on an unlabelled dataset that would be used for fine tuning the language model based on a distillation loss with respect to a reference model. 
 \subsection{In-Context Learning}
@@ -86,21 +92,21 @@ In-context learning is an approach in which model is given context containing a 
 new example for which the model has to generate an output based on the context. \\
 For example:
 % TODO: format this example properly in latex
-        Question 1: What is the capital of France?
-        Answer 1: Paris
-        Correct: Yes
+Question 1: What is the capital of France?
+Answer 1: Paris
+Correct: Yes
     
-        Question 2: What is the capital of Germany?
-        Answer 2: Berlin
-        Correct: Yes
+Question 2: What is the capital of Germany?
+Answer 2: Berlin
+Correct: Yes
     
-        Question 3: What is the capital of Italy?
-        Answer 3: Rome
-        Correct: Yes
+Question 3: What is the capital of Italy?
+Answer 3: Rome
+Correct: Yes
     
-        Question 4: What is the capital of Spain?
-        Answer 4: Amsterdam
-        Correct: ?\\
+Question 4: What is the capital of Spain?
+Answer 4: Amsterdam
+Correct: ?\\
 In the above output, the model is given context containing 3 examples and their expected outputs. The model is then asked to predict the output for the 4th example. The model is then evaluated based on the correctness of the output for the 4th example. \\
 One drawback of in-context learning is large context length, as the context length increases, the model becomes slower and has to remember more context.
 
@@ -119,7 +125,7 @@ The first model models the distribution $P(X|C)$ and the second model models the
 And our goal is to minimize the KL divergence between the two distributions.\\
 The distillation loss is given by:
 \begin{equation}
-    L_{distillation}(\theta) = KL(P_0(X|C) || P_{\theta}(X))
+	L_{distillation}(\theta) = KL(P_0(X|C) || P_{\theta}(X))
 \end{equation}
 Where $P_0(X|C)$ is the distribution modeled by the first model and $P_{\theta}(X)$ is the distribution modeled by the second model. Through this
 loss, the second model learns to model the distribution $P(X|C)$ despite being given no context.
@@ -136,9 +142,16 @@ In this approach, we wanted to see if context distillation can be used in conjun
 in the previous approach. Here, unlike vanilla context distillation, first model used is a fine-tuned one instead of being pretrained. The second model is still pretrained.
 
 \section{Experimental Setup}
-We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\\\
-\textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\\\
-\textbf{Datasets} We use the MNLI dataset for generating the context data. For In-domain generalization, we mesaure the accuracy on the validation set of MNLI dataset. For out-of domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\\\
+We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\
+\textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\
+\textbf{Datasets} We use the MNLI training dataset for generating the context data. For in-domain generalization, we use the validation set of MNLI dataset. For out-of-domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\\\
+\textbf{Evaluation Metrics} We use the following evaluation metrics
+\begin{itemize}
+    \item Accuracy on MNLI validation dataset
+    \item Accuracy on HANS-Lexical\_overlap-entailment
+    \item Accuracy on HANS-Lexical\_overlap-contradiction
+    \item Samples processed per second
+\end{itemize}
 \textbf{Context Size} We evaluate the training strategies on a context size of 32. For in-context leanrning based strategies, this means providing a context of 32 examples during evaluation. For few-shot fine tuning based strategies, this means providing 32 examples for fine-tuning the model. For context distillation, we randomly sample a subset of 100 examples from the binarized MNLI training dataset and remove their ground-truth labels. The models are then fine tuned using a distillation loss against a reference moodel.\\\\
 For the fine tuning based strategies, we fine tune the model for 40 epochs with a batch size of 4.\\\\
 Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 AMD EPYC 7282 vCPUs and 48 GB RAM.
@@ -519,8 +532,8 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 
 
 {\small
-\bibliographystyle{ieee}
-\bibliography{egbib}
+	\bibliographystyle{ieee}
+	\bibliography{egbib}
 }
 
 \end{document}
