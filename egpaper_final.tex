@@ -7,6 +7,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+% \usepackage{tikz}
+
 % Include other packages here, before hyperref.
 
 % If you comment hyperref and then uncomment it, you should delete
@@ -77,14 +79,14 @@ We will describe each of the above strategies in detail in the following section
 \section{Approach}
 In this section, we will describe the approach for the different task adaptation strategies explored as part of this work. This includes three existing task adaptation strategies:
 \begin{enumerate}
-	\item Few-Shot Fine Tuning
-	\item In-Context Learning
-	\item Context Distillation
+    \item In-Context Learning (\textbf{A1})
+	\item Few-Shot Fine Tuning (\textbf{A2})
+	\item Context Distillation (\textbf{A3})
 \end{enumerate}
 We also propose two new task adaptation strategies:
 \begin{enumerate}
-	\item In-Context Learning with Few-Shot Fine Tuning 
-	\item Context Distillation with Few-Shot Fine Tuning
+	\item In-Context Learning with Few-Shot Fine Tuning (\textbf{A4})
+	\item Context Distillation with Few-Shot Fine Tuning (\textbf{A5})
 \end{enumerate}
 Apart from the labelled context data, the context distillation based approaches also rely on an unlabelled dataset that would be used for fine tuning the language model based on a distillation loss with respect to a reference model. 
 \subsection{In-Context Learning}
@@ -92,21 +94,23 @@ In-context learning is an approach in which model is given context containing a 
 new example for which the model has to generate an output based on the context. \\
 For example:
 % TODO: format this example properly in latex
-Question 1: What is the capital of France?
+\begin{verbatim}
+Question 1: What is the capital of UK?
 Answer 1: Paris
-Correct: Yes
-    
-Question 2: What is the capital of Germany?
+Correct: No
+        
+Question 2: What is the capital of India?
 Answer 2: Berlin
-Correct: Yes
-    
+Correct: No
+        
 Question 3: What is the capital of Italy?
 Answer 3: Rome
 Correct: Yes
-    
+        
 Question 4: What is the capital of Spain?
 Answer 4: Amsterdam
-Correct: ?\\
+Correct: ?
+\end{verbatim}
 In the above output, the model is given context containing 3 examples and their expected outputs. The model is then asked to predict the output for the 4th example. The model is then evaluated based on the correctness of the output for the 4th example. \\
 One drawback of in-context learning is large context length, as the context length increases, the model becomes slower and has to remember more context.
 
@@ -130,7 +134,7 @@ The distillation loss is given by:
 Where $P_0(X|C)$ is the distribution modeled by the first model and $P_{\theta}(X)$ is the distribution modeled by the second model. Through this
 loss, the second model learns to model the distribution $P(X|C)$ despite being given no context.
 
-\subsection{Few-Shot Fine Tuning with In-Context Learning}
+\subsection{In-Context Learning with Few-Shot Fine Tuning}
 Since it was shown in <cite> paper that fine-tuning can perform better than in-context learning, we wanted to see if fine-tuned model is given context,
 will it perform better than in-context learning with pretrained model.
 In this approach, first model is fine-tuned on few examples and then given context as input to generate output for a new example.\\
@@ -153,14 +157,61 @@ We compute the performance of the above task adaptation strategies focusing on i
     \item Samples processed per second
 \end{itemize}
 \textbf{Context Size} We evaluate the training strategies on a context size of 32. For in-context leanrning based strategies, this means providing a context of 32 examples during evaluation. For few-shot fine tuning based strategies, this means providing 32 examples for fine-tuning the model. For context distillation, we randomly sample a subset of 100 examples from the binarized MNLI training dataset and remove their ground-truth labels. The models are then fine tuned using a distillation loss against a reference moodel.\\\\
+\textbf{Seeds} We use 5 different seeds for choosing a random context of 32 examples for each of the following strategies-
+\begin{enumerate}
+    \item In-Context Learning
+    \item Few-Shot Fine Tuning
+    \item In-Context Learning with Few-Shot Fine Tuning
+\end{enumerate}
+For Context Distillation, we use the best performing seed from the In-Context Learning strategy. For Context Distillation with Few-Shot Fine Tuning, we use the best performing seed from the In-Context Learning with Few-Shot Fine Tuning strategy.\\\\
+
 For the fine tuning based strategies, we fine tune the model for 40 epochs with a batch size of 4.\\\\
 Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 AMD EPYC 7282 vCPUs and 48 GB RAM.
 
 
 \section{Results}
-\section{Experience}
+\section{Challenges}
+\begin{enumerate}
+    \item \textbf{Resource Constraints:} The larger models in the OPT family (for eg. OPT-30b) require a large amount of GPU memory and training time. Because of our resouce and cost constrainsts, we were unable to evaluate these models. We also had to fix the context size to 32 examples and could only run the experiment for 5 seeds for non context-distillation based approaches. Our experiments on an RTX A6000 48 GB GPU were limited to the OPT-125m and OPT-1.3b models for the NLI task and took a total of \$60 spanned over a week.
+    \item \textbf{Environment Setup:} The existing codebase for llmft utilized a docker container for environment setup. This was not possible to setup on PACE VMs. As a result, we had to setup our development environemnt locally and run the experiments on GPUs reserved over tensordock.  
+    %Only evaluated for NLI task using MNLI dataset. Could have been more comprehensive. Due to time constraints 
+    \item \textbf{Datasets:} Because of time and cost constraints, we only evaluated the strategies for the NLI task on the MNLI and lexical overlap of HANS datasets. Evaluating the models on more datasets would have given us a better understanding of the generalization capabilities of these task adaptation strategies.
+\end{enumerate}
 \section{Conclusion}
 \section{Work Division}
+% Create a student contributions table and use checkmarks to indicate who did what
+%define checkmark
+
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Task} & \textbf{Anmol} & \textbf{Rayyan} \\
+\hline
+\hline
+\textbf{A1 experiments} & \checkmark & \\
+\hline
+\textbf{A2 experiments} & \checkmark & \\
+\hline
+\textbf{A3 code} & & \checkmark \\
+\hline
+\textbf{A3 experiments} & & \checkmark\\
+\hline
+\textbf{A4 code} & \checkmark & \\
+\hline
+\textbf{A4 experiments} & \checkmark & \\
+\hline
+\textbf{A5 code} & &\checkmark \\
+\hline
+\textbf{A5 experiments} & & \checkmark\\
+\hline
+\textbf{Report} & \checkmark & \checkmark\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Student Contributions}
+\end{table}
 
 %-------------------------------------------------------------------------
 % \subsection{Language}
