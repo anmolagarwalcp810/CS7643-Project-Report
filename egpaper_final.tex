@@ -52,11 +52,9 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-	Large Language Models (LLMs) have demonstrated remarkable performance across various language tasks, yet achieving optimal performance often requires task-specific adaptation. This paper delves into the comparative analysis of several adaptation strategies, focusing on Few-Shot Fine Tuning, In-Context Learning, and Context Distillation. Additionally, it introduces two novel strategies: In-Context Learning with Few-Shot Fine Tuning and Context Distillation with Few-Shot Fine Tuning. The study evaluates these strategies on the NLI task using models from the OPT family, measuring both in-domain and out-of-domain accuracies. Results indicate that Few-Shot Fine Tuning consistently outperforms other strategies across various model sizes, demonstrating superior in-domain and out-of-domain generalization, along with a higher sample processing rate. These findings underscore the effectiveness of Few-Shot Fine Tuning as the preferred task adaptation strategy for the NLI task on the OPT family of models, potentially enhancing the capabilities of existing LLMs without extensive re-training or fine-tuning on large datasets.
-
-
+	Large Language Models (LLMs) have demonstrated remarkable performance across various language tasks, yet achieving optimal performance often requires task-specific adaptation. This paper delves into the comparative analysis of several adaptation strategies, focusing on Few-Shot Fine Tuning, In-Context Learning, and Context Distillation. Additionally, it introduces two novel strategies: In-Context Learning with Few-Shot Fine Tuning and Context Distillation with Few-Shot Fine Tuning. The study evaluates these strategies on the NLI task using models from the OPT family, measuring both in-domain and out-of-domain accuracies. Results indicate that Few-Shot Fine Tuning consistently outperforms other strategies across various model sizes, demonstrating superior in-domain and out-of-domain generalization, along with a higher sample processing rate. These findings underscore the effectiveness of Few-Shot Fine Tuning as the preferred task adaptation strategy for the NLI task on the OPT family of models, potentially enhancing the capabilities of existing LLMs without extensive re-training or fine-tuning on large datasets.\\\\
 \end{abstract}
-
+\href{https://github.com/sicario001/llmft}{\textbf{Project GitHub repository}}
 
 %%%%%%%%% BODY TEXT
 \begin{table*}[h!]
@@ -382,7 +380,7 @@ in the previous approach. Here, unlike vanilla context distillation, first model
 \section{Experimental Setup}
 We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\
 \textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\
-\textbf{Datasets} We use the MNLI training dataset for generating the context data. For in-domain generalization, we use the validation set of MNLI dataset. For out-of-domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\\\
+\textbf{Datasets} We use the MNLI training dataset for generating the context data. For in-domain generalization, we use the validation set of MNLI dataset. For out-of-domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\
 \textbf{Evaluation Metrics} We use the following evaluation metrics
 \footnote{Out-of-domain accuracy is computed as the mean of accuracies of HANS-Lexical\_overlap-entailment and HANS-Lexical\_overlap-contradiction.}
 \begin{itemize}
@@ -391,7 +389,7 @@ We compute the performance of the above task adaptation strategies focusing on i
     \item Accuracy on HANS-Lexical\_overlap-contradiction
     \item Samples processed per second
 \end{itemize}
-\textbf{Context Size} We evaluate the training strategies on a context size of 32. For in-context leanrning based strategies, this means providing a context of 32 examples during evaluation. For few-shot fine tuning based strategies, this means providing 32 examples for fine-tuning the model. For context distillation, we randomly sample a subset of 100 examples from the binarized MNLI training dataset and remove their ground-truth labels. The models are then fine tuned using a distillation loss against a reference moodel.\\\\
+\textbf{Context Size} We evaluate the training strategies on a context size of 32. For in-context leanrning based strategies, this means providing a context of 32 examples during evaluation. For few-shot fine tuning based strategies, this means providing 32 examples for fine-tuning the model. For context distillation, we randomly sample a subset of 100 examples from the binarized MNLI training dataset and remove their ground-truth labels. The models are then fine tuned using a distillation loss against a reference moodel.\\
 \textbf{Seeds} We use 5 different seeds for choosing a random context of 32 examples for each of the following strategies-
 \begin{enumerate}
     \item In-Context Learning
@@ -897,5 +895,55 @@ Overall, Few-Shot Fine Tuning (A2) performs the best for both in-domain and out-
 	\bibliographystyle{ieee}
 	\bibliography{egbib}
 }
+\newpage
+\section{Appendix}
+\subsection{Contributions}
+Contribution Table in the next page.
+\begin{table*}[!h]
+	\begin{center}
+	\begin{tabular}{|p{3cm}|p{2cm}|p{2cm}|p{4cm}|}
+	\hline
+	\textbf{Task} & \textbf{Anmol} & \textbf{Rayyan} & \textbf{Detail} \\
+	\hline
+	\hline
+	\textbf{Code Setup} & \checkmark & \checkmark & Setup code for running inside a docker container \\
+	\hline
+	\textbf{Code Analysis} & \checkmark & \checkmark & Analysis of code to understand in-context learning and fine-tuning \\
+	\hline
+	\textbf{A1 Experiments} & \checkmark & & Performed experiments for in-context learning by running scripts and evaluating the results \\
+	\hline
+	\textbf{A2 Experiments} & \checkmark & & Performed experiments for fine-tuning for different models like opt-125m and opt-1.3b on MNLI dataset \\
+	\hline
+	\textbf{A3 Code} & & \checkmark & Wrote code to generate and load output of pretrained-model with context as ground truth labels to train another model \\
+	\hline
+	\textbf{A3 Experiments} & & \checkmark & Performed experiments forcontext distillation or different models like opt-125m and opt-1.3b on MNLI dataset \\
+	\hline
+	\textbf{A4 Code} & \checkmark & & Modified evaluation script to load fine-tuned models using huggingface APIs and then perform in-context learning with fine-tuned model \\
+	\hline
+	\textbf{A4 Experiments} & \checkmark & & Performed experiments for in-context learning  with fine-tuned model by running scripts and evaluating the results.	 \\
+	\hline
+	\textbf{A5 Code} & & \checkmark & Wrote shell scripts specifying path to training labels for fine-tuned model based context learning and train the model via context distillation \\
+	\hline
+	\textbf{A5 Experiments} & & \checkmark & Performed experiments for context distillation with ground truth labels generated by fine-tuned model instead of pretrained one. \\
+	\hline
+	\textbf{Report} & \checkmark & \checkmark & Discussed the approaches, results, and wrote the report \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Student Contributions}
+	\end{table*}
 
+
+% 	Task	Detail	Anmol	Rayyan
+% Code Setup	When through llmft github repo and setup the code for running inside a docker container with different environment variables and conda setup.		
+% Code Analysis	Performed analysis of code to understand in-context learning and fine-tuning, i.e., how it imlemented in code		
+% A1 experiments	Performed experiments for in-context learning by running scripts and evaluating the results.		
+% A2 experiments	Performed experiments for fine-tuning for different models like opt-125m and opt-1.3b on MNLI dataset		
+% A3 code	Wrote code to generate and load output of pretrained-model with context as ground truth labels to train another model 		
+% A3 experiments	Performed experiments forcontext distillation or different models like opt-125m and opt-1.3b on MNLI dataset		
+% A4 code	Modified evaluation script to load fine-tuned models using huggingface APIs and then perform in-context learning with fine-tuned model		
+% A4 experiments	Performed experiments for in-context learning  with fine-tuned model by running scripts and evaluating the results.		
+% A5 code	Wrote shell scripts specifying training labels for fine-tuned model based context learning and train the model via context distillation		
+% A5 experiments	Performed experiments for context distillation with ground truth labels generated by fine-tuned model instead of pretrained one		
+% Report	Discussed the approaches, results, and wrote the report
 \end{document}
