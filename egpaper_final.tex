@@ -52,127 +52,60 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-% 	1. Introduction/Background/Motivation
-% In recent years, Large Language Models (LLMs) have
-% shown great performance across various language tasks.
-% However, the models need to be adapted to the speciﬁc task
-% in consideration to extract the best possible performance.
-% There are several different adaptation strategies. Two com-
-% mon ones include: few-shot ﬁne tuning and in-context learn-
-% ing (ICL). [2] explores these two adaptation strategies in
-% detail and offers a fair comparison between the two. They
-% compare models of different sizes from the OPT and Pythia
-% family for different context lengths on datasets like RTE,
-% MNLI and QQP by measuring both in-domain and out-of-
-% domain accuracies. They conclude that unlike the earlier
-% belief that in-context learning greatly outperforms few-shot
-% ﬁne tuning, if we fairly compare the two strategies, the re-
-% sults are much closer and generally in favor of few-shot ﬁne
-% tuning. Moreover, few-shot ﬁne tuning has an added ben-
-% eﬁt of reduced runtime latency and correspondingly higher
-% sample processing rate as compared in-context learning be-
-% cause of smaller context sizes at the time of inference. [1]
-% explores a different context-distillation based ﬁne tuning
-% strategy for Language Models. This differs from few-shot
-% ﬁnetuning and in-context learning strategies in the fact that
-% apart from using a few high quality labelled samples as the
-% 1Project GitHub repo
-% context, it also utilizes a large unlabelled training dataset for
-% ﬁne tuning the model. It has the same beneﬁts in terms of
-% runtime latency as few-shot ﬁne tuning because it doesn’t
-% require contexts to be provided at inference time.
-% In this work, we compare the above task adaptation
-% strategies i.e few-shot ﬁne tuning, in-context learning and
-% context distillation, and also propose two new task adapta-
-% tion strategies - namely in-context learning with few-shot
-% ﬁne tuning and context distillation with few-shot ﬁne tun-
-% ing. The motivation behind using in-context learning with
-% few-shot ﬁne tuning is that it allows the model to leverage
-% the context data through both the strategies. The motivation
-% behind using context distillation with few-shot ﬁne tuning
-% is that it should in theory provide the performance of in-
-% context learning with few-shot ﬁne tuning while also pro-
-% viding the runtime latency beneﬁts of context distillation
-% because of the absence of context at inference time.
-% If this project proves successful, it could signiﬁcantly en-
-% hance the capabilities of existing Large Language Models
-% (LLMs). This would enable them to handle extended dia-
-% logue conversations more effectively, answer queries about
-% extensive PDF ﬁles, or even auto-complete code while
-% being aware of a large repository. All these improve-
-% ments could be achieved without the necessity for costly
-% re-training from the ground up or ﬁne-tuning on extensive
-% datasets.
-% We will describe each of the above strategies in detail
-% in the following section. We will also provide evaluation
-% results for the above strategies for the OPT family on the
-% MNLI dataset for different context lengths. We also report
-% out-of-domain generalization results on the lexical overlap
-% subset of HANS dataset. Please refer to the experimental
-% setup section for more details on the datasets and evaluation
-% metrics used
-
-% Based on ﬁgure 1, for OPT-125m, Few-Shot Fine Tuning
-% (A2) achieves the best in-domain performance across the 5
-% analyzed strategies on the NLI task. In-Context Learning
-% with Few-Shot Fine Tuning (A4) achieves the second best
-% performance. The other strategies i.e In-Context Learning
-% 5
-% (A1), Context Distillation (A3) and Context Distillation
-% with Few-Shot Fine Tuning (A5) perform close to each
-% other.
-% Based on ﬁgure 2, for OPT-1.3b, Few-Shot Fine Tuning
-% (A2) again achieves the best in-domain accuracy. The order
-% of accuracies in this case is A2 ¿ A3 ¿ A5 ¿ A4 ¿ A1.
-% Based on ﬁgure 3, for OPT-125m, Few-Shot Fine
-% Tuning (A2) achieves the best out of domain accuracy. The
-% other strategies have a similar performance. For OPT-1.3b,
-% Few-Shot Fine Tuning (A2) again achieves the best out of
-% domain accuracy. Surprisingly, In-Context Learning with
-% Few-Shot Fine Tuning (A4) has the worst out of domain
-% accuracy (max across seeds) for OPT-1.3b.
-% Based on ﬁgure 4 and 5, Few-Shot Fine Tuning (A2),
-% Context Distillation (A3) and Context Distillation with
-% Few-Shot Fine Tuning (A5) have similar samples pro-
-% cessing rate. In-Context Learning (A1) and In-Context
-% Learning with Few-Shot Fine Tuning (A4) have a lower
-% samples processing rate. This is consistent with our
-% expectations as A1 and A4 require context at inference time
-% which increases the latency.
-% Overall, Few-Shot Fine Tuning (A2) performs the best
-% for both in-domain and out-of-domain generalization as
-% well as sample processing rate. Therefore, we can conclude
-% that few-shot ﬁne tuning is the best task adaptation strat-
-% egy among the tested strategies for the NLI task on the OPT
-% family of models based on the experiments conducted in
-% this work.
-
-%Use the above to write the abstract for the paper
-In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: few-shot fine tuning and in-context learning (ICL). \cite{mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. 
-
-% They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. Moreover, few-shot fine tuning has an added benefit of reduced runtime latency and correspondingly higher sample processing rate as compared in-context learning because of smaller context sizes at the time of inference. 
-
-\cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot fine tuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. 
-
-% It has the same benefits in terms of runtime latency as few-shot fine tuning because it doesn't require contexts to be provided at inference time.
-
-% In this work, we compare the above task adaptation strategies i.e few-shot fine tuning, in-context learning and context distillation, and 
-
-We also propose two new task adaptation strategies - namely in-context learning with few-shot fine tuning and context distillation with few-shot fine tuning.
-
-We compare these approaches and find that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work. \footnote{Project \href{https://github.com/sicario001/llmft}{GitHub repo}}
-
-% The motivation behind using in-context learning with few-shot fine tuning is that it allows the model to leverage the context data through both the strategies. The motivation behind using context distillation with few-shot fine tuning is that it should in theory provide the performance of in-context learning with few-shot fine tuning while also providing the runtime latency benefits of context distillation because of the absence of context at inference time.
-
-
-% Based on the results, Few-Shot Fine Tuning (A2) achieves the best in-domain performance across the 5 analyzed strategies on the NLI task for the OPT-125m model. In-Context Learning with Few-Shot Fine Tuning (A4) achieves the second best performance. The other strategies i.e In-Context Learning (A1), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) perform close to each other. For the OPT-1.3b model, Few-Shot Fine Tuning (A2) again achieves the best in-domain accuracy. The order of accuracies in this case is A2 > A3 > A5 > A4 > A1. For the OPT-125m model, Few-Shot Fine Tuning (A2) achieves the best out of domain accuracy. The other strategies have a similar performance. For the OPT-1.3b model, Few-Shot Fine Tuning (A2) again achieves the best out of domain accuracy. Surprisingly, In-Context Learning with Few-Shot Fine Tuning (A4) has the worst out of domain accuracy (max across seeds) for the OPT-1.3b model. Few-Shot Fine Tuning (A2), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) have similar samples processing rate. In-Context Learning (A1) and In-Context Learning with Few-Shot Fine Tuning (A4) have a lower samples processing rate. This is consistent with our expectations as A1 and A4 require context at inference time which increases the latency. Overall, Few-Shot Fine Tuning (A2) performs the best for both in-domain and out-of-domain generalization as well as sample processing rate. Therefore, we can conclude that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work.
-
+	Large Language Models (LLMs) have demonstrated remarkable performance across various language tasks, yet achieving optimal performance often requires task-specific adaptation. This paper delves into the comparative analysis of several adaptation strategies, focusing on Few-Shot Fine Tuning, In-Context Learning, and Context Distillation. Additionally, it introduces two novel strategies: In-Context Learning with Few-Shot Fine Tuning and Context Distillation with Few-Shot Fine Tuning. The study evaluates these strategies on the NLI task using models from the OPT family, measuring both in-domain and out-of-domain accuracies. Results indicate that Few-Shot Fine Tuning consistently outperforms other strategies across various model sizes, demonstrating superior in-domain and out-of-domain generalization, along with a higher sample processing rate. These findings underscore the effectiveness of Few-Shot Fine Tuning as the preferred task adaptation strategy for the NLI task on the OPT family of models, potentially enhancing the capabilities of existing LLMs without extensive re-training or fine-tuning on large datasets.
 
 
 \end{abstract}
 
 
 %%%%%%%%% BODY TEXT
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.48 & 0.528 & 1 & 0 \\
+1 & 0.49 & 0.5204 & 1 & 0 \\
+2 & 0.49 & 0.5248 & 1 & 0 \\
+3 & 0.5 & 0.5289 & 1 & 0 \\
+4 & 0.49 & 0.5225 & 1 & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for In-Context Learning (A1) for OPT-125m model}
+\end{table*}
+
+% Add a table for accuracies for approach A1 for opt-1.3b
+% opt-1.3b	accuracy			
+% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+% 0	0.69	0.6096	0.1846	0.791
+% 1	0.63	0.6279	0.7176	0.3126
+% 2	0.59	0.5487	0.0136	0.9876
+% 3	0.69	0.6304	0.554	0.4786
+% 4	0.59	0.6087	0.5136	0.4248
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.69 & 0.6096 & 0.1846 & 0.791 \\
+1 & 0.63 & 0.6279 & 0.7176 & 0.3126 \\
+2 & 0.59 & 0.5487 & 0.0136 & 0.9876 \\
+3 & 0.69 & 0.6304 & 0.554 & 0.4786 \\
+4 & 0.59 & 0.6087 & 0.5136 & 0.4248 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for In-Context Learning (A1) for OPT-1.3b model}
+\end{table*}
+
+	
+
 \section{Introduction/Background/Motivation}
 In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: \textit{few-shot fine tuning} and \textit{in-context learning (ICL)}. \cite {mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. Moreover, few-shot fine tuning has an added benefit of reduced runtime latency and correspondingly higher sample processing rate as compared in-context learning because of smaller context sizes at the time of inference. \cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot finetuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. It has the same benefits in terms of runtime latency as few-shot fine tuning because it doesn't require contexts to be provided at inference time.
 
@@ -184,6 +117,61 @@ If this project proves successful, it could significantly enhance the capabiliti
 We will describe each of the above strategies in detail in the following section. We will also provide evaluation results for the above strategies for the OPT family on the MNLI dataset for different context lengths. We also report out-of-domain generalization results on the lexical overlap subset of HANS dataset. Please refer to the experimental setup section for more details on the datasets and evaluation metrics used.
 
 \section{Approach}
+% A2 
+% opt-125m	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 0	0.5766	1	0
+% 1	0.598	0.9526	0.0276
+% 2	0.5372	1	0
+% 3	0.556	0.105	0.9006
+% 4	0.6462	1	0
+		
+		
+% opt-1.3b	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 0	0.6827	0.8878	0.145
+% 1	0.6573	0.9244	0.1204
+% 2	0.579	1	0
+% 3	0.6918	0.5916	0.4918
+% 4	0.6649	1	0
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.5766 & 1 & 0 \\
+1 & 0.598 & 0.9526 & 0.0276 \\
+2 & 0.5372 & 1 & 0 \\
+3 & 0.556 & 0.105 & 0.9006 \\
+4 & 0.6462 & 1 & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-125m model}
+\end{table*}
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.6827 & 0.8878 & 0.145 \\
+1 & 0.6573 & 0.9244 & 0.1204 \\
+2 & 0.579 & 1 & 0 \\
+3 & 0.6918 & 0.5916 & 0.4918 \\
+4 & 0.6649 & 1 & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-1.3b model}
+\end{table*}
+
+
 In this section, we will describe the approach for the different task adaptation strategies explored as part of this work. This includes three existing task adaptation strategies:
 \begin{enumerate}
     \item In-Context Learning (\textbf{A1})
@@ -252,218 +240,118 @@ for the new example given context than the pretrained model.
 In this approach, we wanted to see if context distillation can be used in conjunction with few-shot fine-tuning to improve the performance of the model due to the same reasons as
 in the previous approach. Here, unlike vanilla context distillation, first model used is a fine-tuned one instead of being pretrained. The second model is still pretrained.
 
+% A3
+% Context Size 32			
+% opt-125m	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 3	0.52	1	0
+		
+		
+		
+		
+		
+		
+% opt-1.3b	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 3	0.6784	0.889	0.1204
+
 \begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.48 & 0.528 & 1 & 0 \\
-	1 & 0.49 & 0.5204 & 1 & 0 \\
-	2 & 0.49 & 0.5248 & 1 & 0 \\
-	3 & 0.5 & 0.5289 & 1 & 0 \\
-	4 & 0.49 & 0.5225 & 1 & 0 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for In-Context Learning (A1) for OPT-125m model}
-	\end{table*}
-	
-	% Add a table for accuracies for approach A1 for opt-1.3b
-	% opt-1.3b	accuracy			
-	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-	% 0	0.69	0.6096	0.1846	0.791
-	% 1	0.63	0.6279	0.7176	0.3126
-	% 2	0.59	0.5487	0.0136	0.9876
-	% 3	0.69	0.6304	0.554	0.4786
-	% 4	0.59	0.6087	0.5136	0.4248
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.69 & 0.6096 & 0.1846 & 0.791 \\
-	1 & 0.63 & 0.6279 & 0.7176 & 0.3126 \\
-	2 & 0.59 & 0.5487 & 0.0136 & 0.9876 \\
-	3 & 0.69 & 0.6304 & 0.554 & 0.4786 \\
-	4 & 0.59 & 0.6087 & 0.5136 & 0.4248 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for In-Context Learning (A1) for OPT-1.3b model}
-	\end{table*}
-	
-	
-	% A2 
-	% opt-125m	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 0	0.5766	1	0
-	% 1	0.598	0.9526	0.0276
-	% 2	0.5372	1	0
-	% 3	0.556	0.105	0.9006
-	% 4	0.6462	1	0
-				
-				
-	% opt-1.3b	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 0	0.6827	0.8878	0.145
-	% 1	0.6573	0.9244	0.1204
-	% 2	0.579	1	0
-	% 3	0.6918	0.5916	0.4918
-	% 4	0.6649	1	0
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.5766 & 1 & 0 \\
-	1 & 0.598 & 0.9526 & 0.0276 \\
-	2 & 0.5372 & 1 & 0 \\
-	3 & 0.556 & 0.105 & 0.9006 \\
-	4 & 0.6462 & 1 & 0 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-125m model}
-	\end{table*}
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.6827 & 0.8878 & 0.145 \\
-	1 & 0.6573 & 0.9244 & 0.1204 \\
-	2 & 0.579 & 1 & 0 \\
-	3 & 0.6918 & 0.5916 & 0.4918 \\
-	4 & 0.6649 & 1 & 0 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-1.3b model}
-	\end{table*}
-	
-	% A3
-	% Context Size 32			
-	% opt-125m	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 3	0.52	1	0
-				
-				
-				
-				
-				
-				
-	% opt-1.3b	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 3	0.6784	0.889	0.1204
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	3 & 0.52 & 1 & 0 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for Context Distillation (A3) for OPT-125m model}
-	\end{table*}
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	3 & 0.6784 & 0.889 & 0.1204 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for Context Distillation (A3) for OPT-1.3b model}
-	\end{table*}
-	
-	% A4
-	% opt-125m	accuracy			
-	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-	% 0	0.49	0.5231	1	0
-	% 1	0.51	0.5309	1	0
-	% 2	0.49	0.5198	1	0
-	% 3	0.51	0.4801	0	1
-	% 4	0.57	0.5554	1	0
-					
-					
-	% opt-1.3b	accuracy			
-	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-	% 0	0.62	0.6256	0.9386	0.0526
-	% 1	0.53	0.5406	0.9986	0.0004
-	% 2	0.54	0.544	1	0
-	% 3	0.66	0.6531	0.8486	0.1484
-	% 4	0.66	0.6409	0.9496	0.042
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.49 & 0.5231 & 1 & 0 \\
-	1 & 0.51 & 0.5309 & 1 & 0 \\
-	2 & 0.49 & 0.5198 & 1 & 0 \\
-	3 & 0.51 & 0.4801 & 0 & 1 \\
-	4 & 0.57 & 0.5554 & 1 & 0 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-125m model}
-	\end{table*}
-	
-	\begin{table*}[h!]
-	\begin{center}
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-	\hline
-	\hline
-	0 & 0.62 & 0.6256 & 0.9386 & 0.0526 \\
-	1 & 0.53 & 0.5406 & 0.9986 & 0.0004 \\
-	2 & 0.54 & 0.544 & 1 & 0 \\
-	3 & 0.66 & 0.6531 & 0.8486 & 0.1484 \\
-	4 & 0.66 & 0.6409 & 0.9496 & 0.042 \\
-	\hline
-	\end{tabular}
-	\end{center}
-	\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-1.3b model}
-	\end{table*}
-	
-	% A5
-	% opt-125m	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 3	0.5261	1	0
-				
-				
-				
-				
-				
-				
-	% opt-1.3b	accuracy		
-	% Seed	mnli-eval	hans-entail	hans-contradict
-	% 3	0.6672	0.9342	0.0794
-	
-	\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+3 & 0.52 & 1 & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for Context Distillation (A3) for OPT-125m model}
+\end{table*}
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+3 & 0.6784 & 0.889 & 0.1204 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for Context Distillation (A3) for OPT-1.3b model}
+\end{table*}
+
+% A4
+% opt-125m	accuracy			
+% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+% 0	0.49	0.5231	1	0
+% 1	0.51	0.5309	1	0
+% 2	0.49	0.5198	1	0
+% 3	0.51	0.4801	0	1
+% 4	0.57	0.5554	1	0
+			
+			
+% opt-1.3b	accuracy			
+% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+% 0	0.62	0.6256	0.9386	0.0526
+% 1	0.53	0.5406	0.9986	0.0004
+% 2	0.54	0.544	1	0
+% 3	0.66	0.6531	0.8486	0.1484
+% 4	0.66	0.6409	0.9496	0.042
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.49 & 0.5231 & 1 & 0 \\
+1 & 0.51 & 0.5309 & 1 & 0 \\
+2 & 0.49 & 0.5198 & 1 & 0 \\
+3 & 0.51 & 0.4801 & 0 & 1 \\
+4 & 0.57 & 0.5554 & 1 & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-125m model}
+\end{table*}
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+\hline
+\hline
+0 & 0.62 & 0.6256 & 0.9386 & 0.0526 \\
+1 & 0.53 & 0.5406 & 0.9986 & 0.0004 \\
+2 & 0.54 & 0.544 & 1 & 0 \\
+3 & 0.66 & 0.6531 & 0.8486 & 0.1484 \\
+4 & 0.66 & 0.6409 & 0.9496 & 0.042 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-1.3b model}
+\end{table*}
+
+% A5
+% opt-125m	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 3	0.5261	1	0
+		
+		
+		
+		
+		
+		
+% opt-1.3b	accuracy		
+% Seed	mnli-eval	hans-entail	hans-contradict
+% 3	0.6672	0.9342	0.0794
+
+\begin{table*}[h!]
 	\begin{center}
 	\begin{tabular}{|c|c|c|c|c|}
 	\hline
@@ -510,25 +398,27 @@ We compute the performance of the above task adaptation strategies focusing on i
     \item Few-Shot Fine Tuning
     \item In-Context Learning with Few-Shot Fine Tuning
 \end{enumerate}
-For Context Distillation, we use the best performing seed from the In-Context Learning strategy. For Context Distillation with Few-Shot Fine Tuning, we use the best performing seed from the In-Context Learning with Few-Shot Fine Tuning strategy.\\\\
+For Context Distillation, we use the best performing seed from the In-Context Learning strategy. For Context Distillation with Few-Shot Fine Tuning, we use the best performing seed from the In-Context Learning with Few-Shot Fine Tuning strategy.\\
 
 For the fine tuning based strategies, we fine tune the model for 40 epochs with a batch size of 4.\\\\
 Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 AMD EPYC 7282 vCPUs and 48 GB RAM.
 
+
+	
+
 \newpage
 \section{Results and Discussion}
-
 % Insert figure figures/opt_125m-accuracy.png
 % Insert figure figures/opt_1.3b-accuracy.png
 
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/opt-125m-accuracy.png}
 \end{center}
 \caption{Accuracy on MNLI validation dataset for OPT-125m model}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/opt-1_3b-accuracy.png}
 \end{center}
@@ -537,14 +427,14 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 
 % Out of domain accuracy on HANS
 % Insert figure figures/hans-accuracy.png
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/out-of-domain-opt-125m.png}
 \end{center}
 \caption{Out of domain accuracy on HANS dataset for OPT-125m}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[h]
     \begin{center}
     \includegraphics[width=0.8\linewidth]{figures/out-of-domain-opt-1_3b.png}
     \end{center}
@@ -553,7 +443,7 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
     
 
 % Insert figures sample rates
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/samples-opt125m.png}
 \end{center}
