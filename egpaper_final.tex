@@ -6,12 +6,11 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{float}
 % \usepackage{tikz}
 
 % Include other packages here, before hyperref.
 
-% If you comment hyperref and then uncomment it, you should delete
 % egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
 % run, let it finish, and you should be clear).
 \usepackage[breaklinks=true,bookmarks=false]{hyperref}
@@ -145,6 +144,245 @@ for the new example given context than the pretrained model.
 In this approach, we wanted to see if context distillation can be used in conjunction with few-shot fine-tuning to improve the performance of the model due to the same reasons as
 in the previous approach. Here, unlike vanilla context distillation, first model used is a fine-tuned one instead of being pretrained. The second model is still pretrained.
 
+\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.48 & 0.528 & 1 & 0 \\
+	1 & 0.49 & 0.5204 & 1 & 0 \\
+	2 & 0.49 & 0.5248 & 1 & 0 \\
+	3 & 0.5 & 0.5289 & 1 & 0 \\
+	4 & 0.49 & 0.5225 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for In-Context Learning (A1) for OPT-125m model}
+	\end{table*}
+	
+	% Add a table for accuracies for approach A1 for opt-1.3b
+	% opt-1.3b	accuracy			
+	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+	% 0	0.69	0.6096	0.1846	0.791
+	% 1	0.63	0.6279	0.7176	0.3126
+	% 2	0.59	0.5487	0.0136	0.9876
+	% 3	0.69	0.6304	0.554	0.4786
+	% 4	0.59	0.6087	0.5136	0.4248
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.69 & 0.6096 & 0.1846 & 0.791 \\
+	1 & 0.63 & 0.6279 & 0.7176 & 0.3126 \\
+	2 & 0.59 & 0.5487 & 0.0136 & 0.9876 \\
+	3 & 0.69 & 0.6304 & 0.554 & 0.4786 \\
+	4 & 0.59 & 0.6087 & 0.5136 & 0.4248 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for In-Context Learning (A1) for OPT-1.3b model}
+	\end{table*}
+	
+	
+	% A2 
+	% opt-125m	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 0	0.5766	1	0
+	% 1	0.598	0.9526	0.0276
+	% 2	0.5372	1	0
+	% 3	0.556	0.105	0.9006
+	% 4	0.6462	1	0
+				
+				
+	% opt-1.3b	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 0	0.6827	0.8878	0.145
+	% 1	0.6573	0.9244	0.1204
+	% 2	0.579	1	0
+	% 3	0.6918	0.5916	0.4918
+	% 4	0.6649	1	0
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.5766 & 1 & 0 \\
+	1 & 0.598 & 0.9526 & 0.0276 \\
+	2 & 0.5372 & 1 & 0 \\
+	3 & 0.556 & 0.105 & 0.9006 \\
+	4 & 0.6462 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-125m model}
+	\end{table*}
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.6827 & 0.8878 & 0.145 \\
+	1 & 0.6573 & 0.9244 & 0.1204 \\
+	2 & 0.579 & 1 & 0 \\
+	3 & 0.6918 & 0.5916 & 0.4918 \\
+	4 & 0.6649 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-1.3b model}
+	\end{table*}
+	
+	% A3
+	% Context Size 32			
+	% opt-125m	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 3	0.52	1	0
+				
+				
+				
+				
+				
+				
+	% opt-1.3b	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 3	0.6784	0.889	0.1204
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	3 & 0.52 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Context Distillation (A3) for OPT-125m model}
+	\end{table*}
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	3 & 0.6784 & 0.889 & 0.1204 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Context Distillation (A3) for OPT-1.3b model}
+	\end{table*}
+	
+	% A4
+	% opt-125m	accuracy			
+	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+	% 0	0.49	0.5231	1	0
+	% 1	0.51	0.5309	1	0
+	% 2	0.49	0.5198	1	0
+	% 3	0.51	0.4801	0	1
+	% 4	0.57	0.5554	1	0
+					
+					
+	% opt-1.3b	accuracy			
+	% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
+	% 0	0.62	0.6256	0.9386	0.0526
+	% 1	0.53	0.5406	0.9986	0.0004
+	% 2	0.54	0.544	1	0
+	% 3	0.66	0.6531	0.8486	0.1484
+	% 4	0.66	0.6409	0.9496	0.042
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.49 & 0.5231 & 1 & 0 \\
+	1 & 0.51 & 0.5309 & 1 & 0 \\
+	2 & 0.49 & 0.5198 & 1 & 0 \\
+	3 & 0.51 & 0.4801 & 0 & 1 \\
+	4 & 0.57 & 0.5554 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-125m model}
+	\end{table*}
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	0 & 0.62 & 0.6256 & 0.9386 & 0.0526 \\
+	1 & 0.53 & 0.5406 & 0.9986 & 0.0004 \\
+	2 & 0.54 & 0.544 & 1 & 0 \\
+	3 & 0.66 & 0.6531 & 0.8486 & 0.1484 \\
+	4 & 0.66 & 0.6409 & 0.9496 & 0.042 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-1.3b model}
+	\end{table*}
+	
+	% A5
+	% opt-125m	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 3	0.5261	1	0
+				
+				
+				
+				
+				
+				
+	% opt-1.3b	accuracy		
+	% Seed	mnli-eval	hans-entail	hans-contradict
+	% 3	0.6672	0.9342	0.0794
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	3 & 0.5261 & 1 & 0 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Context Distillation with Few-Shot Fine Tuning (A5) for OPT-125m model}
+	\end{table*}
+	
+	\begin{table*}[h!]
+	\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
+	\hline
+	\hline
+	3 & 0.6672 & 0.9342 & 0.0794 \\
+	\hline
+	\end{tabular}
+	\end{center}
+	\caption{Accuracy for Context Distillation with Few-Shot Fine Tuning (A5) for OPT-1.3b model}
+	\end{table*}
+	
 \section{Experimental Setup}
 We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\
 \textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\
@@ -173,29 +411,46 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 % Insert figure figures/opt_125m-accuracy.png
 % Insert figure figures/opt_1.3b-accuracy.png
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/opt-125m-accuracy.png}
 \end{center}
 \caption{Accuracy on MNLI validation dataset for OPT-125m model}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/opt-1_3b-accuracy.png}
 \end{center}
 \caption{Accuracy on MNLI validation dataset for OPT-1.3b model}
 \end{figure}
 
+% Out of domain accuracy on HANS
+% Insert figure figures/hans-accuracy.png
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/out-of-domain-opt-125m.png}
+\end{center}
+\caption{Out of domain accuracy on HANS dataset for OPT-125m}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.8\linewidth]{figures/out-of-domain-opt-1_3b.png}
+    \end{center}
+    \caption{Out of domain accuracy on HANS dataset for OPT-1.3B}
+    \end{figure}
+    
+
 % Insert figures sample rates
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/samples-opt125m.png}
 \end{center}
 \caption{Samples processed per second for OPT-125m model}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/samples-opt1_3B.png}
 \end{center}
@@ -212,246 +467,6 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 % 4	0.49	0.5225	1	0
 
 % Make table span two columns
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.48 & 0.528 & 1 & 0 \\
-1 & 0.49 & 0.5204 & 1 & 0 \\
-2 & 0.49 & 0.5248 & 1 & 0 \\
-3 & 0.5 & 0.5289 & 1 & 0 \\
-4 & 0.49 & 0.5225 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for In-Context Learning (A1) for OPT-125m model}
-\end{table*}
-
-% Add a table for accuracies for approach A1 for opt-1.3b
-% opt-1.3b	accuracy			
-% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-% 0	0.69	0.6096	0.1846	0.791
-% 1	0.63	0.6279	0.7176	0.3126
-% 2	0.59	0.5487	0.0136	0.9876
-% 3	0.69	0.6304	0.554	0.4786
-% 4	0.59	0.6087	0.5136	0.4248
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.69 & 0.6096 & 0.1846 & 0.791 \\
-1 & 0.63 & 0.6279 & 0.7176 & 0.3126 \\
-2 & 0.59 & 0.5487 & 0.0136 & 0.9876 \\
-3 & 0.69 & 0.6304 & 0.554 & 0.4786 \\
-4 & 0.59 & 0.6087 & 0.5136 & 0.4248 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for In-Context Learning (A1) for OPT-1.3b model}
-\end{table*}
-
-
-% A2 
-% opt-125m	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 0	0.5766	1	0
-% 1	0.598	0.9526	0.0276
-% 2	0.5372	1	0
-% 3	0.556	0.105	0.9006
-% 4	0.6462	1	0
-			
-			
-% opt-1.3b	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 0	0.6827	0.8878	0.145
-% 1	0.6573	0.9244	0.1204
-% 2	0.579	1	0
-% 3	0.6918	0.5916	0.4918
-% 4	0.6649	1	0
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.5766 & 1 & 0 \\
-1 & 0.598 & 0.9526 & 0.0276 \\
-2 & 0.5372 & 1 & 0 \\
-3 & 0.556 & 0.105 & 0.9006 \\
-4 & 0.6462 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-125m model}
-\end{table*}
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.6827 & 0.8878 & 0.145 \\
-1 & 0.6573 & 0.9244 & 0.1204 \\
-2 & 0.579 & 1 & 0 \\
-3 & 0.6918 & 0.5916 & 0.4918 \\
-4 & 0.6649 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Few-Shot Fine Tuning (A2) for OPT-1.3b model}
-\end{table*}
-
-% A3
-% Context Size 32			
-% opt-125m	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 3	0.52	1	0
-			
-			
-			
-			
-			
-			
-% opt-1.3b	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 3	0.6784	0.889	0.1204
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-3 & 0.52 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Context Distillation (A3) for OPT-125m model}
-\end{table*}
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-3 & 0.6784 & 0.889 & 0.1204 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Context Distillation (A3) for OPT-1.3b model}
-\end{table*}
-
-% A4
-% opt-125m	accuracy			
-% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-% 0	0.49	0.5231	1	0
-% 1	0.51	0.5309	1	0
-% 2	0.49	0.5198	1	0
-% 3	0.51	0.4801	0	1
-% 4	0.57	0.5554	1	0
-				
-				
-% opt-1.3b	accuracy			
-% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-% 0	0.62	0.6256	0.9386	0.0526
-% 1	0.53	0.5406	0.9986	0.0004
-% 2	0.54	0.544	1	0
-% 3	0.66	0.6531	0.8486	0.1484
-% 4	0.66	0.6409	0.9496	0.042
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.49 & 0.5231 & 1 & 0 \\
-1 & 0.51 & 0.5309 & 1 & 0 \\
-2 & 0.49 & 0.5198 & 1 & 0 \\
-3 & 0.51 & 0.4801 & 0 & 1 \\
-4 & 0.57 & 0.5554 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-125m model}
-\end{table*}
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{Train Accuracy} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-0 & 0.62 & 0.6256 & 0.9386 & 0.0526 \\
-1 & 0.53 & 0.5406 & 0.9986 & 0.0004 \\
-2 & 0.54 & 0.544 & 1 & 0 \\
-3 & 0.66 & 0.6531 & 0.8486 & 0.1484 \\
-4 & 0.66 & 0.6409 & 0.9496 & 0.042 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for In-Context Learning with Few-Shot Fine Tuning (A4) for OPT-1.3b model}
-\end{table*}
-
-% A5
-% opt-125m	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 3	0.5261	1	0
-			
-			
-			
-			
-			
-			
-% opt-1.3b	accuracy		
-% Seed	mnli-eval	hans-entail	hans-contradict
-% 3	0.6672	0.9342	0.0794
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-3 & 0.5261 & 1 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Context Distillation with Few-Shot Fine Tuning (A5) for OPT-125m model}
-\end{table*}
-
-\begin{table*}[h!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Seed} & \textbf{MNLI Eval} & \textbf{HANS Entail} & \textbf{HANS Contradict} \\
-\hline
-\hline
-3 & 0.6672 & 0.9342 & 0.0794 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Accuracy for Context Distillation with Few-Shot Fine Tuning (A5) for OPT-1.3b model}
-\end{table*}
-
 
 \section{Challenges}
 \begin{enumerate}
@@ -660,7 +675,7 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 % FAQ: Are acknowledgements OK?  No.  Leave them for the final copy.
 
 
-% \begin{figure}[t]
+% \begin{figure}[h]
 % \begin{center}
 % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 %    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
