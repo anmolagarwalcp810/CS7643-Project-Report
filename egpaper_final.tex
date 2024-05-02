@@ -52,18 +52,126 @@
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-	The ABSTRACT is to be in fully-justified italicized text, at the top
-	of the left-hand column, below the author and affiliation
-	information. Use the word ``Abstract'' as the title, in 12-point
-	Times, boldface type, centered relative to the column, initially
-	capitalized. The abstract is to be in 10-point, single-spaced type.
-	Leave two blank lines after the Abstract, then begin the main text.
-	Look at previous ICCV abstracts to get a feel for style and length.
-	Please note that the title can be up to 512 characters in length.
-	The maximum size of the abstract is 4000 characters.
+% 	1. Introduction/Background/Motivation
+% In recent years, Large Language Models (LLMs) have
+% shown great performance across various language tasks.
+% However, the models need to be adapted to the speciﬁc task
+% in consideration to extract the best possible performance.
+% There are several different adaptation strategies. Two com-
+% mon ones include: few-shot ﬁne tuning and in-context learn-
+% ing (ICL). [2] explores these two adaptation strategies in
+% detail and offers a fair comparison between the two. They
+% compare models of different sizes from the OPT and Pythia
+% family for different context lengths on datasets like RTE,
+% MNLI and QQP by measuring both in-domain and out-of-
+% domain accuracies. They conclude that unlike the earlier
+% belief that in-context learning greatly outperforms few-shot
+% ﬁne tuning, if we fairly compare the two strategies, the re-
+% sults are much closer and generally in favor of few-shot ﬁne
+% tuning. Moreover, few-shot ﬁne tuning has an added ben-
+% eﬁt of reduced runtime latency and correspondingly higher
+% sample processing rate as compared in-context learning be-
+% cause of smaller context sizes at the time of inference. [1]
+% explores a different context-distillation based ﬁne tuning
+% strategy for Language Models. This differs from few-shot
+% ﬁnetuning and in-context learning strategies in the fact that
+% apart from using a few high quality labelled samples as the
+% 1Project GitHub repo
+% context, it also utilizes a large unlabelled training dataset for
+% ﬁne tuning the model. It has the same beneﬁts in terms of
+% runtime latency as few-shot ﬁne tuning because it doesn’t
+% require contexts to be provided at inference time.
+% In this work, we compare the above task adaptation
+% strategies i.e few-shot ﬁne tuning, in-context learning and
+% context distillation, and also propose two new task adapta-
+% tion strategies - namely in-context learning with few-shot
+% ﬁne tuning and context distillation with few-shot ﬁne tun-
+% ing. The motivation behind using in-context learning with
+% few-shot ﬁne tuning is that it allows the model to leverage
+% the context data through both the strategies. The motivation
+% behind using context distillation with few-shot ﬁne tuning
+% is that it should in theory provide the performance of in-
+% context learning with few-shot ﬁne tuning while also pro-
+% viding the runtime latency beneﬁts of context distillation
+% because of the absence of context at inference time.
+% If this project proves successful, it could signiﬁcantly en-
+% hance the capabilities of existing Large Language Models
+% (LLMs). This would enable them to handle extended dia-
+% logue conversations more effectively, answer queries about
+% extensive PDF ﬁles, or even auto-complete code while
+% being aware of a large repository. All these improve-
+% ments could be achieved without the necessity for costly
+% re-training from the ground up or ﬁne-tuning on extensive
+% datasets.
+% We will describe each of the above strategies in detail
+% in the following section. We will also provide evaluation
+% results for the above strategies for the OPT family on the
+% MNLI dataset for different context lengths. We also report
+% out-of-domain generalization results on the lexical overlap
+% subset of HANS dataset. Please refer to the experimental
+% setup section for more details on the datasets and evaluation
+% metrics used
+
+% Based on ﬁgure 1, for OPT-125m, Few-Shot Fine Tuning
+% (A2) achieves the best in-domain performance across the 5
+% analyzed strategies on the NLI task. In-Context Learning
+% with Few-Shot Fine Tuning (A4) achieves the second best
+% performance. The other strategies i.e In-Context Learning
+% 5
+% (A1), Context Distillation (A3) and Context Distillation
+% with Few-Shot Fine Tuning (A5) perform close to each
+% other.
+% Based on ﬁgure 2, for OPT-1.3b, Few-Shot Fine Tuning
+% (A2) again achieves the best in-domain accuracy. The order
+% of accuracies in this case is A2 ¿ A3 ¿ A5 ¿ A4 ¿ A1.
+% Based on ﬁgure 3, for OPT-125m, Few-Shot Fine
+% Tuning (A2) achieves the best out of domain accuracy. The
+% other strategies have a similar performance. For OPT-1.3b,
+% Few-Shot Fine Tuning (A2) again achieves the best out of
+% domain accuracy. Surprisingly, In-Context Learning with
+% Few-Shot Fine Tuning (A4) has the worst out of domain
+% accuracy (max across seeds) for OPT-1.3b.
+% Based on ﬁgure 4 and 5, Few-Shot Fine Tuning (A2),
+% Context Distillation (A3) and Context Distillation with
+% Few-Shot Fine Tuning (A5) have similar samples pro-
+% cessing rate. In-Context Learning (A1) and In-Context
+% Learning with Few-Shot Fine Tuning (A4) have a lower
+% samples processing rate. This is consistent with our
+% expectations as A1 and A4 require context at inference time
+% which increases the latency.
+% Overall, Few-Shot Fine Tuning (A2) performs the best
+% for both in-domain and out-of-domain generalization as
+% well as sample processing rate. Therefore, we can conclude
+% that few-shot ﬁne tuning is the best task adaptation strat-
+% egy among the tested strategies for the NLI task on the OPT
+% family of models based on the experiments conducted in
+% this work.
+
+%Use the above to write the abstract for the paper
+In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: few-shot fine tuning and in-context learning (ICL). \cite{mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. 
+
+% They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. Moreover, few-shot fine tuning has an added benefit of reduced runtime latency and correspondingly higher sample processing rate as compared in-context learning because of smaller context sizes at the time of inference. 
+
+\cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot fine tuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. 
+
+% It has the same benefits in terms of runtime latency as few-shot fine tuning because it doesn't require contexts to be provided at inference time.
+
+% In this work, we compare the above task adaptation strategies i.e few-shot fine tuning, in-context learning and context distillation, and 
+
+We also propose two new task adaptation strategies - namely in-context learning with few-shot fine tuning and context distillation with few-shot fine tuning.
+
+We compare these approaches and find that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work. \footnote{Project \href{https://github.com/sicario001/llmft}{GitHub repo}}
+
+% The motivation behind using in-context learning with few-shot fine tuning is that it allows the model to leverage the context data through both the strategies. The motivation behind using context distillation with few-shot fine tuning is that it should in theory provide the performance of in-context learning with few-shot fine tuning while also providing the runtime latency benefits of context distillation because of the absence of context at inference time.
+
+
+% Based on the results, Few-Shot Fine Tuning (A2) achieves the best in-domain performance across the 5 analyzed strategies on the NLI task for the OPT-125m model. In-Context Learning with Few-Shot Fine Tuning (A4) achieves the second best performance. The other strategies i.e In-Context Learning (A1), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) perform close to each other. For the OPT-1.3b model, Few-Shot Fine Tuning (A2) again achieves the best in-domain accuracy. The order of accuracies in this case is A2 > A3 > A5 > A4 > A1. For the OPT-125m model, Few-Shot Fine Tuning (A2) achieves the best out of domain accuracy. The other strategies have a similar performance. For the OPT-1.3b model, Few-Shot Fine Tuning (A2) again achieves the best out of domain accuracy. Surprisingly, In-Context Learning with Few-Shot Fine Tuning (A4) has the worst out of domain accuracy (max across seeds) for the OPT-1.3b model. Few-Shot Fine Tuning (A2), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) have similar samples processing rate. In-Context Learning (A1) and In-Context Learning with Few-Shot Fine Tuning (A4) have a lower samples processing rate. This is consistent with our expectations as A1 and A4 require context at inference time which increases the latency. Overall, Few-Shot Fine Tuning (A2) performs the best for both in-domain and out-of-domain generalization as well as sample processing rate. Therefore, we can conclude that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work.
+
+
+
 \end{abstract}
 
-\footnote{Project \href{https://github.com/sicario001/llmft}{GitHub repo}}
+
 %%%%%%%%% BODY TEXT
 \section{Introduction/Background/Motivation}
 In recent years, Large Language Models (LLMs) have shown great performance across various language tasks. However, the models need to be adapted to the specific task in consideration to extract the best possible performance. There are several different adaptation strategies. Two common ones include: \textit{few-shot fine tuning} and \textit{in-context learning (ICL)}. \cite {mosbach2023fewshot} explores these two adaptation strategies in detail and offers a fair comparison between the two. They compare models of different sizes from the OPT and Pythia family for different context lengths on datasets like RTE, MNLI and QQP by measuring both in-domain and out-of-domain accuracies. They conclude that unlike the earlier belief that in-context learning greatly outperforms few-shot fine tuning, if we fairly compare the two strategies, the results are much closer and generally in favor of few-shot fine tuning. Moreover, few-shot fine tuning has an added benefit of reduced runtime latency and correspondingly higher sample processing rate as compared in-context learning because of smaller context sizes at the time of inference. \cite{askell2021general} explores a different context-distillation based fine tuning strategy for Language Models. This differs from few-shot finetuning and in-context learning strategies in the fact that apart from using a few high quality labelled samples as the context, it also utilizes a large unlabelled training dataset for fine tuning the model. It has the same benefits in terms of runtime latency as few-shot fine tuning because it doesn't require contexts to be provided at inference time.
@@ -382,12 +490,13 @@ in the previous approach. Here, unlike vanilla context distillation, first model
 	\end{center}
 	\caption{Accuracy for Context Distillation with Few-Shot Fine Tuning (A5) for OPT-1.3b model}
 	\end{table*}
-	
+
 \section{Experimental Setup}
 We compute the performance of the above task adaptation strategies focusing on in-domain and out-of-domain generalization for the natural language inference (NLI) task.\\
 \textbf{Model} We choose the OPT model family and specifically the OPT-125m and OPT-1.3b models.\\
 \textbf{Datasets} We use the MNLI training dataset for generating the context data. For in-domain generalization, we use the validation set of MNLI dataset. For out-of-domain generalization, we choose the lexical overlap subset of HANS. The MNLI dataset is binarized by removing the neutral samples.\\\\
 \textbf{Evaluation Metrics} We use the following evaluation metrics
+\footnote{Out-of-domain accuracy is computed as the mean of accuracies of HANS-Lexical\_overlap-entailment and HANS-Lexical\_overlap-contradiction.}
 \begin{itemize}
     \item Accuracy on MNLI validation dataset
     \item Accuracy on HANS-Lexical\_overlap-entailment
@@ -406,8 +515,9 @@ For Context Distillation, we use the best performing seed from the In-Context Le
 For the fine tuning based strategies, we fine tune the model for 40 epochs with a batch size of 4.\\\\
 Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 AMD EPYC 7282 vCPUs and 48 GB RAM.
 
+\newpage
+\section{Results and Discussion}
 
-\section{Results}
 % Insert figure figures/opt_125m-accuracy.png
 % Insert figure figures/opt_1.3b-accuracy.png
 
@@ -457,16 +567,30 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
 \caption{Samples processed per second for OPT-1.3B model}
 \end{figure}
 
-% Add a table for accuracies for approach A1
-% opt-125m	accuracy			
-% Seed	Train Accuracy	mnli-eval	hans-entail	hans-contradict
-% 0	0.48	0.528	1	0
-% 1	0.49	0.5204	1	0
-% 2	0.49	0.5248	1	0
-% 3	0.5	0.5289	1	0
-% 4	0.49	0.5225	1	0
+% Based on figure 1, for opt-125m, A2 i.e few-shot fine tuning achieves the best in-domain performance across the 5 enalyzed strategies on the NLI task. A4 i.e in-context learning with few-shot fine tuning achieves the second best performance. The other strategies i.e A1, A3 and A4 perform close to each other.
+% Based on figure 2, for opt1.3b, A2 again achieves best in domain accuracy. The order of accuracies in this case is A2 > A3 > A5 > A4 > A1.
 
-% Make table span two columns
+Based on figure 1, for OPT-125m, Few-Shot Fine Tuning (A2) achieves the best in-domain performance across the 5 analyzed strategies on the NLI task. In-Context Learning with Few-Shot Fine Tuning (A4) achieves the second best performance. The other strategies i.e In-Context Learning (A1), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) perform close to each other.\\
+
+Based on figure 2, for OPT-1.3b, Few-Shot Fine Tuning (A2) again achieves the best in-domain accuracy. The order of accuracies in this case is A2 > A3 > A5 > A4 > A1.\\
+
+
+% Based on figure 3, for opt-125m, A2 achieves the best out of domain accuracy. The other strategies have a similar performance. For opt-1.3b, A2 again achieves the best out of domain accuracy. sURPRISINGLY, A4 has the worst out of domain accuracy (max across seeds) for opt-1.3b.
+
+Based on figure 3, for OPT-125m, Few-Shot Fine Tuning (A2) achieves the best out of domain accuracy. The other strategies have a similar performance. For OPT-1.3b, Few-Shot Fine Tuning (A2) again achieves the best out of domain accuracy. Surprisingly, In-Context Learning with Few-Shot Fine Tuning (A4) has the worst out of domain accuracy (max across seeds) for OPT-1.3b.\\
+
+% Based on figure 4 and 5, A2, A3 and A5 have similar samples processing rate. A1 and A4 have a lower samples processing rate. This is consistent with our expectations as A1 and A4 require context at inference time which increases the latency.
+
+Based on figure 4 and 5, Few-Shot Fine Tuning (A2), Context Distillation (A3) and Context Distillation with Few-Shot Fine Tuning (A5) have similar samples processing rate. In-Context Learning (A1) and In-Context Learning with Few-Shot Fine Tuning (A4) have a lower samples processing rate. This is consistent with our expectations as A1 and A4 require context at inference time which increases the latency.\\
+
+% Overall, A2 i.e few-shot fine tuning performs the best for both in-domain and out-of-domain generalization as well as sample processing rate. Therefpre, we can conclude that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work.
+
+Overall, Few-Shot Fine Tuning (A2) performs the best for both in-domain and out-of-domain generalization as well as sample processing rate. Therefore, we can conclude that few-shot fine tuning is the best task adaptation strategy among the tested strategies for the NLI task on the OPT family of models based on the experiments conducted in this work.
+
+
+
+
+
 
 \section{Challenges}
 \begin{enumerate}
@@ -475,7 +599,6 @@ Our training and evaluation was run on a VM with NVIDIA RTX A6000 48 GB GPU, 2 A
     %Only evaluated for NLI task using MNLI dataset. Could have been more comprehensive. Due to time constraints 
     \item \textbf{Datasets:} Because of time and cost constraints, we only evaluated the strategies for the NLI task on the MNLI and lexical overlap of HANS datasets. Evaluating the models on more datasets would have given us a better understanding of the generalization capabilities of these task adaptation strategies.
 \end{enumerate}
-\section{Conclusion}
 \section{Work Division}
 % Create a student contributions table and use checkmarks to indicate who did what
 %define checkmark
